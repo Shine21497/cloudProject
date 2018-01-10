@@ -25,19 +25,24 @@ public class IndexRest {
 
         long start = System.currentTimeMillis();
 
-        if(((String)map.get("action")).equals("time-month")){
-            int year = Integer.parseInt((String)map.get("year"));
-            int month = Integer.parseInt((String)map.get("month"));
-            number = indexService.timeMonth(year,month);
+        if(((String)map.get("action")).equals("order")){
+            String year = (String)map.get("year");
+            String month = (String)map.get("month");
+            String day = (String)map.get("number");
+            hashMap.put("list",indexService.getOrdersByDate(year,month,day));
+            return hashMap;
         }
-        else if (((String)map.get("action")).equals("time-season")){
-            int year = Integer.parseInt((String)map.get("year"));
-            String season = (String)map.get("season");
-            number = indexService.timeSeason(year,season);
+        else if (((String)map.get("action")).equals("shop")){
+            String name = (String)map.get("name");
+            String address = (String)map.get("address");
+             hashMap.put("list",indexService.getShopByNameAddress(name,address));
+             return hashMap;
         }
-        else if (((String)map.get("action")).equals("time-week")){
-            int year = Integer.parseInt((String)map.get("week"));
-            number = indexService.year(year);
+        else if (((String)map.get("action")).equals("product")){
+            String type = (String)map.get("type");
+            String name = (String)map.get("name");
+            hashMap.put("list",indexService.getProductsByNameType(name,type));
+            return hashMap;
         }
         else if (((String)map.get("action")).equals("name")){
             String name = (String)map.get("name");

@@ -268,4 +268,42 @@ public class Dao extends BaseDao{
         return super.selectSomeNote(sql);
 
     }
+    public Vector getAllOrder()
+    {
+
+        String sql="select * from purchaseorder";
+        return super.selectSomeNote(sql);
+    }
+    public Vector getAllShops()
+    {
+
+        String sql="select * from shops";
+        return super.selectSomeNote(sql);
+    }
+    public Vector getAllProducts()
+    {
+
+        String sql="select * from product";
+        return super.selectSomeNote(sql);
+    }
+    public Vector getCustomerById(int id)
+    {
+
+        String sql="select * from customer where c_id="+id;
+        return super.selectOnlyNote(sql);
+    }
+    public Vector getShopById(int id)
+    {
+
+        String sql="select * from shop where s_id="+id;
+        return super.selectOnlyNote(sql);
+    }
+    public String getTypeById(int id)
+    {
+        String sql="select name from product_type where t_id="+id;
+        return (String)super.selectOnlyValue(sql);
+    }
+
+
+
 }

@@ -4,11 +4,13 @@ import cloud.dao.Dao;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
 public class Index {
-    private static String driverName = "org.apache.hive.jdbc.HiveDriver";
     public Long timeMonth(int year,int month) {
         return Dao.getInstance().getMovieNumByTimeMonth(year,month);
     }
@@ -146,5 +148,112 @@ public class Index {
 
     public Long hot(String name){
         return Dao.getInstance().getMovieHot(name);
+    }
+
+
+    public List<HashMap<String,String>> getOrdersByDate(String year,String month,String day) {
+        List<HashMap<String,String>> list = new ArrayList<>();
+        Vector allorders=Dao.getInstance().getAllOrder();
+        for(int i=0;i<allorders.size();i++)
+        {
+            Vector line=(Vector) allorders.get(i);
+            Timestamp timestamp=(Timestamp)line.get(4);
+            DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            if(!day.isEmpty())
+            {
+                day.equals(sdf.format(timestamp));
+                HashMap<String,String> hashMap=new HashMap<>();
+                int o_id=(int)line.get(0);
+                int c_id=(int)line.get(1);
+                Vector customer=Dao.getInstance().getCustomerById(c_id);
+                int s_id=(int)line.get(2);
+                Vector shop=Dao.getInstance().getShopById(s_id);
+                int totalprice=(int)line.get(3);
+                String date=sdf.format(timestamp);
+                String status=(String)line.get(5);
+                hashMap.put("o_id",String.valueOf(o_id));
+                hashMap.put("customer",(String)customer.get(1));
+                hashMap.put("shop",(String)shop.get(1));
+                hashMap.put("totalprice",String.valueOf(totalprice));
+                hashMap.put("date",date);
+                hashMap.put("status",status);
+                list.add(hashMap);
+                continue;
+            }
+            String[] ymd=sdf.format(timestamp).split("-");
+            if(ymd[0].equals(year.isEmpty()?ymd[0]:year)&&ymd[1].equals(month.isEmpty()?ymd[1]:month))
+            {
+                HashMap<String,String> hashMap=new HashMap<>();
+                int o_id=(int)line.get(0);
+                int c_id=(int)line.get(1);
+                Vector customer=Dao.getInstance().getCustomerById(c_id);
+                int s_id=(int)line.get(2);
+                Vector shop=Dao.getInstance().getShopById(s_id);
+                int totalprice=(int)line.get(3);
+                String date=sdf.format(timestamp);
+                String status=(String)line.get(5);
+                hashMap.put("o_id",String.valueOf(o_id));
+                hashMap.put("customer",(String)customer.get(1));
+                hashMap.put("shop",(String)shop.get(1));
+                hashMap.put("totalprice",String.valueOf(totalprice));
+                hashMap.put("date",date);
+                hashMap.put("status",status);
+                list.add(hashMap);
+
+            }
+        }
+        return  list;
+
+    }
+    public List<HashMap<String,String>> getShopByNameAddress(String name,String address) {
+        List<HashMap<String,String>> list = new ArrayList<>();
+        Vector allshops=Dao.getInstance().getAllShops();
+        for(int i=0;i<allshops.size();i++)
+        {
+            Vector line=(Vector)allshops.get(i);
+            int s_id=(int)line.get(0);
+            String shopname=(String)line.get(1);
+            String shopaddr=(String)line.get(2);
+            String phonenum=(String)line.get(3);
+            if(shopname.equals(name.isEmpty()?shopname:name)&&shopaddr.equals(address.isEmpty()?shopaddr:address))
+            {
+                HashMap<String,String> hashMap=new HashMap<>();
+                hashMap.put("s_id",String.valueOf(s_id));
+                hashMap.put("shopname",shopname);
+                hashMap.put("shopaddress",address);
+                hashMap.put("phonenumber",phonenum);
+                list.add(hashMap);
+
+            }
+        }
+        return  list;
+
+    }
+    public List<HashMap<String,String>> getProductsByNameType(String name,String type) {
+        List<HashMap<String,String>> list = new ArrayList<>();
+        Vector allproducts=Dao.getInstance().getAllProducts();
+        for(int i=0;i<allproducts.size();i++)
+        {
+            Vector line=(Vector)allproducts.get(i);
+            int p_id=(int)line.get(0);
+            String productname=(String)line.get(1);
+            String price=(String)line.get(2);
+            int type_id=(int)line.get(3);
+            if(name.equals(productname))
+            {
+                String typename=Dao.getInstance().getTypeById(type_id);
+                if(typename.equals(type)) {
+                    HashMap<String, String> hashMap = new HashMap<>();
+                    hashMap.put("p_id", String.valueOf(p_id));
+                    hashMap.put("productname", productname);
+                    hashMap.put("price", price);
+                    hashMap.put("type", typename);
+                    list.add(hashMap);
+                }
+
+            }
+        }
+        return  list;
+
     }
 }
