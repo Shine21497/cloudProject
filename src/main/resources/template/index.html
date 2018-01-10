@@ -74,7 +74,7 @@
                             </div>
                             <div class="year" style="margin-top: 10px;margin-bottom: 10px;">具体日期</div>
                             <div class="dream-controls">
-                                <input placeholder="点击输入具体日期" id="myID"/>
+                                <input placeholder="点击输入具体日期" id="date"/>
                                 <button type="reset" style="height: 35px;top: 410px;left: 170px;border-radius: 0;">重置</button>
                             </div>
                         </div>
@@ -90,27 +90,18 @@
                 <label class="title">查询结果</label>
             </div>
             <div id="container" class="result-container"></div>
-            <table id="time" class="display" style="text-align: center;" width="100%" data-page-length="25" data-order="[[ 1, &quot;asc&quot; ]]">
+            <table id="order" class="display" style="text-align: center;" width="100%" data-page-length="25" data-order="[[ 1, &quot;asc&quot; ]]">
                 <thead>
                 <tr>
-                    <th>产品ID</th>
-                    <th>电影名</th>
-                    <th>发行时间</th>
-                    <th>片长</th>
-                    <th>音频类型</th>
-                    <th>发行商</th>
+                    <th>订单ID</th>
+                    <th>购买者</th>
+                    <th>商店</th>
+                    <th>总价格</th>
+                    <th>日期</th>
+                    <th>状态</th>
                 </tr>
                 </thead>
-                <tfoot>
-                <tr>
-                    <th>产品ID</th>
-                    <th>电影名</th>
-                    <th>发行时间</th>
-                    <th>片长</th>
-                    <th>音频类型</th>
-                    <th>发行商</th>
-                </tr>
-                </tfoot>
+
                 <tbody></tbody>
             </table>
         </div>
@@ -157,7 +148,7 @@
 <div  class="search bar6" id="search-product" style="display: none">
     <div class="container">
         <div class="inquirebox">
-            <label class="title">查询商店</label>
+            <label class="title">查询商品</label>
             <form class="search-form">
                 <input id="p-search-name" type="text" placeholder="请输入商品名称" class="input-button"/>
                 <input id="p-search-type" type="text" placeholder="请输入商品类型" class="input-button"/>
@@ -174,23 +165,12 @@
                 <thead>
                 <tr>
                     <th>产品ID</th>
-                    <th>电影名</th>
-                    <th>发行时间</th>
-                    <th>片长</th>
-                    <th>音频类型</th>
-                    <th>发行商</th>
+                    <th>产品名称</th>
+                    <th>价格</th>
+                    <th>类型</th>
                 </tr>
                 </thead>
-                <tfoot>
-                <tr>
-                    <th>产品ID</th>
-                    <th>电影名</th>
-                    <th>发行时间</th>
-                    <th>片长</th>
-                    <th>音频类型</th>
-                    <th>发行商</th>
-                </tr>
-                </tfoot>
+
                 <tbody>
                 </tbody>
             </table>
@@ -213,7 +193,7 @@
 <!--End 数据分析-->
 
 <script type="text/javascript">
-    document.getElementById("myID").flatpickr();
+    document.getElementById("date").flatpickr();
 </script>
 
 </body>

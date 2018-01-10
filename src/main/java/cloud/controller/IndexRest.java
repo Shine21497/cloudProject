@@ -28,7 +28,7 @@ public class IndexRest {
         if(((String)map.get("action")).equals("order")){
             String year = (String)map.get("year");
             String month = (String)map.get("month");
-            String day = (String)map.get("number");
+            String day = (String)map.get("date");
             hashMap.put("list",indexService.getOrdersByDate(year,month,day));
             return hashMap;
         }
