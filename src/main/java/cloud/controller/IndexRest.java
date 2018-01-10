@@ -44,15 +44,15 @@ public class IndexRest {
             hashMap.put("list",indexService.getProductsByNameType(name,type));
             return hashMap;
         }
-        else if (((String)map.get("action")).equals("name")){
-            String name = (String)map.get("name");
-            number = indexService.name(name);
+        else if (((String)map.get("action")).equals("hot-shop")){
+            hashMap.put("list",indexService.getMostPopularShop());
+            return hashMap;
         }
-        else if (((String)map.get("action")).equals("director")){
-            String director =  (String)map.get("director");
-            number = indexService.director(director);
+        else if (((String)map.get("action")).equals("hot-product")){
+            hashMap.put("list",indexService.getMostPopularProduct());
+            return hashMap;
         }
-        else if (((String)map.get("action")).equals("actor")){
+        else if (((String)map.get("action")).equals("rich-shop")){
             String actor = (String)map.get("actor");
             Long main = indexService.actorMain(actor);
             Long participate = indexService.actorParticipate(actor);

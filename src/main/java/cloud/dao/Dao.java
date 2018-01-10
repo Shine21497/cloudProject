@@ -303,6 +303,22 @@ public class Dao extends BaseDao{
         String sql="select name from product_type where t_id="+id;
         return (String)super.selectOnlyValue(sql);
     }
+    public Vector getProductById(int id)
+    {
+        String sql="select name from product where p_id="+id;
+        return super.selectSomeValue(sql);
+    }
+    public Vector getOrderGroupByShop()
+    {
+        String sql="select s_id,count(o_id) from purchaseorder group by s_id";
+        return super.selectSomeNote(sql);
+    }
+    public Vector getIncludeGroupByProduct()
+    {
+        String sql="select p_id,sum(number) from purchaseorder group by p_id";
+        return super.selectSomeNote(sql);
+    }
+
 
 
 

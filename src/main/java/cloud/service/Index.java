@@ -256,4 +256,85 @@ public class Index {
         return  list;
 
     }
+    public List<HashMap<String,String>> getMostPopularShop() {
+        List<HashMap<String,String>> list = new ArrayList<>();
+        Vector vector=Dao.getInstance().getOrderGroupByShop();
+        vector.sort(new Comparator() {
+            @Override
+            public int compare(Object o1, Object o2) {
+                Vector vector1= (Vector)o1;
+                Vector vector2=(Vector)o2;
+                if((int)vector1.get(1)<(int)vector2.get(1))
+                {
+                    return -1;
+                }
+                else if((int)vector1.get(1)==(int)vector2.get(1))
+                {
+                    return 0;
+                }
+                else
+                {
+                    return 1;
+                }
+            }
+        });
+        for (int i=0;i<3;i++)
+        {
+            Vector shopline=(Vector) vector.get(i);
+            int id=(int)shopline.get(0);
+            int numoforder=(int)shopline.get(1);
+            Vector shop=Dao.getInstance().getShopById(id);
+            HashMap<String,String> hashMap=new HashMap<>();
+            hashMap.put("id",String.valueOf(id));
+            hashMap.put("name",(String)shop.get(1));
+            hashMap.put("address",(String)shop.get(2));
+            hashMap.put("ordernum",String.valueOf(numoforder));
+            list.add(hashMap);
+
+        }
+        return list;
+
+    }
+    public List<HashMap<String,String>> getMostPopularProduct() {
+        List<HashMap<String,String>> list = new ArrayList<>();
+        Vector vector=Dao.getInstance().getIncludeGroupByProduct();
+        vector.sort(new Comparator() {
+            @Override
+            public int compare(Object o1, Object o2) {
+                Vector vector1= (Vector)o1;
+                Vector vector2=(Vector)o2;
+                if((int)vector1.get(1)<(int)vector2.get(1))
+                {
+                    return -1;
+                }
+                else if((int)vector1.get(1)==(int)vector2.get(1))
+                {
+                    return 0;
+                }
+                else
+                {
+                    return 1;
+                }
+            }
+        });
+        for (int i=0;i<3;i++)
+        {
+            Vector productline=(Vector) vector.get(i);
+            int id=(int)productline.get(0);
+            int sellnum=(int)productline.get(1);
+            Vector product=Dao.getInstance().getProductById(id);
+            String  name=(String)product.get(1);
+            int price=(int)product.get(2);
+            HashMap<String,String> hashMap=new HashMap<>();
+            hashMap.put("id",String.valueOf(id));
+            hashMap.put("name",name);
+            hashMap.put("price",String.valueOf(price));
+            hashMap.put("sellnum",String.valueOf(sellnum));
+            list.add(hashMap);
+
+        }
+        return list;
+
+    }
+
 }
