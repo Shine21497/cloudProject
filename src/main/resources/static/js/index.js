@@ -36,6 +36,7 @@ function Table(id,type) {
     var address=$('#s-search-address');
     alert(name.val());
     if (id === 'shop') {
+        shop.style.display='block';
         var post = {
             action : "shop",
             address : address.val(),

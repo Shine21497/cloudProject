@@ -6,9 +6,6 @@
     <session-factory>
         <property name="connection.url">jdbc:mysql://10.60.42.201:3306/datawarehouse</property>
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-        <mapping class="edu.tongji.datawarehouse.entity.ActrecordEntity"/>
-        <mapping class="edu.tongji.datawarehouse.entity.CommentEntity"/>
-        <mapping class="edu.tongji.datawarehouse.entity.MovieEntity"/>
         <!-- <property name="connection.username"/> -->
         <!-- <property name="connection.password"/> -->
 
