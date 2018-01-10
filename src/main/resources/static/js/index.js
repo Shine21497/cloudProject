@@ -4,15 +4,27 @@ var productTb=null;
 var orderTb =null;
 var timechart,namechart,directorchart,directorchart2,actorchart,categorychart,languagechart,combinationchart,runtimechart; //柱状图
 
+function addTableRow(id,trHtml,row){
+    //获取table最后一行 $("#tab tr:last")
+    //获取table第一行 $("#tab tr").eq(0)
+    //获取table倒数第二行 $("#tab tr").eq(-2)
+    var $tr=$("#"+id+" tr").eq(row);
+    if($tr.size()==0){
+        alert("指定的table id或行数不存在！");
+        return;
+    }
+    $tr.after(trHtml);
+
+}
 function toggle(id){
     var shop=document.getElementById('search-shop');
     var product=document.getElementById('search-product');
     var order=document.getElementById('search-order');
     var dataAnalysis=document.getElementById('data-analysis');
-    if(id==='shop') {data.style.display='none';order.style.display='none';product.style.display='none';shop.style.display='block';}
-    if(id==='product') {data.style.display='none';order.style.display='none';product.style.display='block';shop.style.display='none';}
-    if(id==='order') {data.style.display='none';order.style.display='block';product.style.display='none';shop.style.display='none';}
-    if(id==='data'){data.style.display='block';order.style.display='none';product.style.display='none';shop.style.display='none';}
+    if(id==='shop') {dataAnalysis.style.display='none';order.style.display='none';product.style.display='none';shop.style.display='block';}
+    if(id==='product') {dataAnalysis.style.display='none';order.style.display='none';product.style.display='block';shop.style.display='none';}
+    if(id==='order') {dataAnalysis.style.display='none';order.style.display='block';product.style.display='none';shop.style.display='none';}
+    if(id==='data'){dataAnalysis.style.display='block';order.style.display='none';product.style.display='none';shop.style.display='none';}
 
 }
 
@@ -20,175 +32,31 @@ function Table(id,type) {
     var shop = document.getElementById('shopTable');
     var product = document.getElementById('productTable');
     var order = document.getElementById('orderTable');
+    var name=$('#s-search-name');
+    var address=$('#s-search-address');
+    alert(name.val());
+    if (id === 'shop') {
+        var post = {
+            action : "shop",
+            address : address.val(),
+            name : name.val(),
+        };
+        ajaxPost("/",post,function (data) {
+            if(data.list){
+                data.list.forEach(function (value) {
+                    alert(value.s_id);
+                    alert(value.shopname);
+                    alert(value.shopaddress)
+                    addTableRow("shop","<tr>"+"<td>"+value.s_id+"</td>"+"<td>"+value.shopname+"</td>"+"<td>"+value.shopaddress+"</td>"+"<td>"+value.phonenumber+"</td>"+"</tr>",-1)
+                });
 
-    if (id === 'order') {
-        order.style.display = 'block';
-        $.fn.dataTable.ext.errMode = 'throw';
-        timeChoice();
-        if (orderTb === null) {
-            orderTb = $('#order').DataTable({
-                ajax: {
-                    type: "post",
-                    url: '/order',
-                    data: {
-                        "year": String(year),
-                        "month": String(monthArray),
-                        "dateType": String(dateType),
-                        "day": String(dayArray),
-                        "date": String(date),
-                        "season": String(seasonArray)
-                    },
-                    dataSrc: ""
-                },
-                columns: [
-                    {data: "movieId"},
-                    {data: "title"},
-                    {data: "releaseDate"},
-                    {data: "runTime"},
-                    {data: "studio"},
-                    {data: "publisher"}
-                ],
-                "bPaginage": true,
-                "sPaginationType": "full_numbers",
-                "oLanguage": {
-                    "sLengthMenu": "每页显示 _MENU_ 条",
-                    "sZeroRecords": "没有找到符合条件的数据",
-                    "sInfo": "当前第 _START_ - _END_ 条　共计 _TOTAL_ 条",
-                    "sInfoEmpty": "没有记录",
-                    "sInfoFiltered": "(从 _MAX_ 条记录中过滤)",
-                    "sSearch": "搜索",
-                    "sProcessing": "数据加载中...",
-                    "oPaginate": {
-                        "sFirst": "首页",
-                        "sPrevious": "上一页",
-                        "sNext": "下一页",
-                        "sLast": "尾页"
-                    }
-                }
-            });
-            $.ajax({
-                url: '/movie/multiple/showtime',
-                data: {
-                    "year": String(year),
-                    "month": String(monthArray),
-                    "dateType": String(dateType),
-                    "day": String(dayArray),
-                    "date": String(date),
-                    "season": String(seasonArray)
-                },
-                dataSrc: '',
-                success: function (data) {
+            }
+            else{
+                alert("list null")
 
-                    var dataSrc;
-                    dataSrc = data[0];
-                    $('#timerelation').text(dataSrc.relation);
-                    $('#timemix').text(dataSrc.mix);
-                    if (timechart !== undefined) {
-                        timechart.destroy();
-                    }
-                    timechart = Highcharts.chart('container', {
-                        chart: {
-                            type: 'column'
-                        },
-                        title: {
-                            text: '两种模型执行时间比较'
-                        },
-                        data: {
-                            columns: [
-                                [null, '执行时间'], // 分类
-                                ['关系型数据仓库存储模型', dataSrc.relation],           // 第一个数据列
-                                ['混合型数据存储模型', dataSrc.mix]            // 第二个数据列
-                            ]
-                        },
-                        yAxis: {
-                            allowDecimals: false,
-                            title: {
-                                text: 'ms',
-                                rotation: 0
-                            }
-                        },
-                        tooltip: {
-                            formatter: function () {
-                                return '<b>' + this.series.name
+            }
 
-                                    + '</b><br/>' +
-                                    this.point.y + 'ms ' + this.point.name
-
-                                        .toLowerCase();
-                            }
-                        },
-                        plotOptions: {
-                            column: {
-                                dataLabels: {
-                                    enabled: true, // dataLabels设为true
-                                    style: {
-                                        color: '#42abf8'
-                                    }
-                                }
-                            }
-                        }
-                    });
-                }
-            });
-        }
-        else {
-            mvTimetb.ajax.url("/order").load();
-            $.ajax({
-                url: '/movie/multiple/showtime',
-                dataSrc: '',
-                success: function (data) {
-                    var dataSrc;
-                    dataSrc = data[0];
-                    $('#timerelation').text(dataSrc.relation);
-                    $('#timemix').text(dataSrc.mix);
-                    if (timechart !== undefined) {
-                        timechart.destroy();
-                    }
-                    timechart = Highcharts.chart('container', {
-                        chart: {
-                            type: 'column'
-                        },
-                        title: {
-                            text: '两种模型执行时间比较'
-                        },
-                        data: {
-                            columns: [
-                                [null, '执行时间'], // 分类
-                                ['关系型数据仓库存储模型', dataSrc.relation],           // 第一个数据列
-                                ['混合型数据存储模型', dataSrc.mix]            // 第二个数据列
-                            ]
-                        },
-                        yAxis: {
-                            allowDecimals: false,
-                            title: {
-                                text: 'ms',
-                                rotation: 0
-                            }
-                        },
-                        tooltip: {
-                            formatter: function () {
-                                return '<b>' + this.series.name
-
-                                    + '</b><br/>' +
-                                    this.point.y + 'ms ' + this.point.name
-
-                                        .toLowerCase();
-                            }
-                        },
-                        plotOptions: {
-                            column: {
-                                dataLabels: {
-                                    enabled: true, // dataLabels设为true
-                                    style: {
-                                        color: '#42abf8'
-                                    }
-                                }
-                            }
-                        }
-                    });
-                }
-            });
-        }
+        });
     }
 
     if (id === 'name') {

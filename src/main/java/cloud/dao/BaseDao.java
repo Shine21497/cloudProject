@@ -26,7 +26,7 @@ public class BaseDao {
 
 
     public Vector selectSomeNote(String sql) {
-        Vector<List<Object>> rsV = new Vector<>(); // 创建结果集向量
+        Vector<Vector> rsV = new Vector<>(); // 创建结果集向量
 
         Connection conn = JDBC.getConnection();// 获得数据库连接
 
@@ -39,7 +39,7 @@ public class BaseDao {
 
             while (rs.next()) {// 遍历结果集
 
-                List<Object> rowV = new ArrayList<>();// 创建行向量
+                Vector<Object> rowV = new Vector();// 创建行向量
 
                 for (int column = 1; column <= columnCount; column++) {
                     rowV.add(rs.getObject(column));// 添加列值

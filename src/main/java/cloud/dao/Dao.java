@@ -72,7 +72,7 @@ public class Dao extends BaseDao{
     public Vector getAllShops()
     {
 
-        String sql="select * from shops";
+        String sql="select * from shop";
         return super.selectSomeNote(sql);
     }
     public Vector getAllProducts()
