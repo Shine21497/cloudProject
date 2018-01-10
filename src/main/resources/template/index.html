@@ -3,441 +3,229 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Index</title>
-    <link href="/static/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="/static/css/index.css" rel="stylesheet"/>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css"/>
-
-
-    <script src="/static/js/lib/tether.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="/static/js/lib/jquery.cookie.js"></script>
-    <script src="https://cdn.bootcss.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
-    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
-
-    <script src="/static/js/lib/jquery.shCircleLoader.js"></script>
-    <script src="/static/js/lib/ajaxpost.js"></script>
+    <script src="/static/js/lib/jquery-1.12.4.js"></script>
+    <script src="/static/js/lib/jquery.dataTables.min.js"></script>
+    <script src="/static/js/lib/highcharts.js"></script>
+    <script src="/static/js/lib/data.js"></script>
+    <script src="/static/js/lib/flatpickr.js"></script>
     <script src="/static/js/index.js"></script>
-    <script src="/static/js/index.time.js"></script>
-    <script src="/static/js/index.name.js"></script>
-    <script src="/static/js/index.director.js"></script>
-    <script src="/static/js/index.actor.js"></script>
-    <script src="/static/js/index.type.js"></script>
-    <script src="/static/js/index.combine.js"></script>
-    <script src="/static/js/index.list.js"></script>
-    <script src="/static/js/index.hot.js"></script>
 
-    <script>
-        $(document).ready(function () {
-            index.init($('body'));
-        })
-    </script>
+    <link rel="stylesheet" type="text/css" href="/static/css/flatpickr.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/navigation.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/button.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css"/>
+
 </head>
-<body>
-<div id="wrapper">
 
-    <!-- Sidebar -->
-    <div id="sidebar-wrapper">
-        <ul class="sidebar-nav">
-            <li class="nav-item active">
-                <a href="#time" data-toggle="tab" class="nav-link">按照时间进行查询及统计</a>
+<body>
+
+<div class="navbar-wrapper" id="animenu" style="position:relative;top:-16px">
+    <nav class="animenu">
+        <button class="animenu__toggle">
+            <span class="animenu__toggle__bar"></span>
+            <span class="animenu__toggle__bar"></span>
+            <span class="animenu__toggle__bar"></span>
+        </button>
+        <ul class="animenu__nav">
+            <li>
+                <a onClick="toggle('shop')">查询商店</a>
             </li>
-            <li class="nav-item active">
-                <a href="#name" data-toggle="tab" class="nav-link">按照电影名称进行查询及统计</a>
+            <li>
+                <a onClick="toggle('product')">查询商品</a>
             </li>
-            <li class="nav-item active">
-                <a href="#director" data-toggle="tab" class="nav-link">按照导演进行查询及统计</a>
+            <li>
+                <a onClick="toggle('order')">查询订单</a>
             </li>
-            <li class="nav-item active">
-                <a href="#actor" data-toggle="tab" class="nav-link">按照演员进行查询及统计</a>
-            </li>
-            <li class="nav-item active">
-                <a href="#type" data-toggle="tab" class="nav-link">按照电影类别进行查询及统计</a>
-            </li>
-            <li class="nav-item active">
-                <a href="#combine" data-toggle="tab" class="nav-link">按照上述条件的组合查询和统计</a>
-            </li>
-            <li class="nav-item active">
-                <a href="#list" data-toggle="tab" class="nav-link">具体查询</a>
-            </li>
-            <li class="nav-item active">
-                <a href="#hot" data-toggle="tab" class="nav-link">热度查询</a>
+            <li>
+                <a onClick="toggle('data')">数据分析</a>
             </li>
         </ul>
-    </div>
-    <!-- /#sidebar-wrapper -->
-
-    <!-- Page Content -->
-    <div id="page-content-wrapper">
-        <div class="container-fluid tab-content">
-            <div class="tab-pane fade active show" id="time">
-                <h1>时间</h1>
-                <div class="row">
-                    <div class="col">
-                        <h5 class="float-left">年</h5>
-                        <input class="float-left form-control w-75" type="number" min="1900" max="2017" data-tag="year"/>
-                    </div>
-                    <div class="col">
-                        <h5 class="float-left">月</h5>
-                        <select class="float-left form-control w-75" data-tag="month">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                            <option value="11">11</option>
-                            <option value="12">12</option>
-                        </select>
-                    </div>
-                    <div class="col">
-                        <h5 class="float-left">季度</h5>
-                        <select class="float-left form-control w-75" data-tag="season">
-                            <option value="春">春</option>
-                            <option value="夏">夏</option>
-                            <option value="秋">秋</option>
-                            <option value="冬">冬</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-1">
-                        <p class="float-right">电影数</p>
-                    </div>
-                    <div class="col-2">
-                        <input class="form-control middle-input float-left" disabled="disabled"/>
-                    </div>
-                    <div class="col-2 float-left">
-                        <button class="btn btn-primary middle-input">hive按时间查询</button>
-                    </div>
-                    <div class="col-2 float-left">
-                        <button class="btn btn-primary middle-input">hive按季度查询</button>
-                    </div>
-                    <div class="col-2 float-left">
-                        <button class="btn btn-primary middle-input">mysql按时间查询</button>
-                    </div>
-                    <div class="col-2 float-left">
-                        <button class="btn btn-primary middle-input">mysql按季度查询</button>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <h5 class="float-left">一年内增加的电影</h5>
-                        <input class="float-left form-control w-25" min="1900" max="2017" data-tag="week"/>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-1">
-                        <p class="float-right">电影数</p>
-                    </div>
-                    <div class="col">
-                        <input class="form-control middle-input float-left" disabled="disabled"/>
-                    </div>
-                    <div class="col">
-                        <button class="btn btn-primary middle-input">hive按年查询</button>
-                    </div>
-                    <div class="col">
-                        <button class="btn btn-primary middle-input">mysql按年查询</button>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-pane fade" id="name">
-                <h1>电影名</h1>
-                <div class="row">
-                    <div class="col">
-                        <h5 class="float-left">电影名字</h5>
-                        <input class="float-left form-control w-75" data-tag="name"/>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-1">
-                        <p class="float-right">版本数</p>
-                    </div>
-                    <div class="col">
-                        <input class="form-control middle-input float-left" disabled="disabled"/>
-                    </div>
-                    <div class="col">
-                        <button class="btn btn-primary middle-input">hive按电影名查询</button>
-                    </div>
-                    <div class="col">
-                        <button class="btn btn-primary middle-input">mysql按电影名查询</button>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-pane fade" id="director">
-                <h1>导演</h1>
-                <div class="row">
-                    <div class="col">
-                        <h5 class="float-left">导演名字</h5>
-                        <input class="float-left form-control w-75" data-tag="director"/>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-1">
-                        <p class="float-right">电影数</p>
-                    </div>
-                    <div class="col">
-                        <input class="form-control middle-input float-left" disabled="disabled"/>
-                    </div>
-                    <div class="col">
-                        <button class="btn btn-primary middle-input">hive按导演名查询</button>
-                    </div>
-                    <div class="col">
-                        <button class="btn btn-primary middle-input">mysql按导演名查询</button>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-pane fade" id="actor">
-                <h1>演员</h1>
-                <div class="row">
-                    <div class="col">
-                        <h5 class="float-left">演员名字</h5>
-                        <input class="float-left form-control w-75" data-tag="actor"/>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-1">
-                        <p class="float-right">主演数</p>
-                    </div>
-                    <div class="col">
-                        <input class="form-control middle-input float-left" disabled="disabled"/>
-                    </div>
-                    <div class="col-1">
-                        <p class="float-right">参演数</p>
-                    </div>
-                    <div class="col">
-                        <input class="form-control middle-input float-left" disabled="disabled"/>
-                    </div>
-                    <div class="col">
-                        <button class="btn btn-primary middle-input">hive按演员查询</button>
-                    </div>
-                    <div class="col">
-                        <button class="btn btn-primary middle-input">mysql按演员查询</button>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-pane fade" id="type">
-                <h1>类型</h1>
-                <div class="row">
-                    <div class="col">
-                        <h5 class="float-left">电影类型</h5>
-                        <select class="float-left form-control w-75" data-tag="type">
-                            <option value="action">action</option>
-                            <option value="children">children</option>
-                            <option value="anime">anime</option>
-                            <option value="family">family</option>
-                            <option value="horror">horror</option>
-                            <option value="romance">romance</option>
-                            <option value="exercise">exercise</option>
-                            <option value="west">west</option>
-                            <option value="drama">drama</option>
-                            <option value="dance">dance</option>
-                            <option value="nature">nature</option>
-                            <option value="documentary">documentary</option>
-                            <option value="science">science</option>
-                            <option value="other">other</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-1">
-                        <p class="float-right">电影数</p>
-                    </div>
-                    <div class="col">
-                        <input class="form-control middle-input float-left" disabled="disabled"/>
-                    </div>
-                    <div class="col">
-                        <button class="btn btn-primary middle-input">hive按类型查询</button>
-                    </div>
-                    <div class="col">
-                        <button class="btn btn-primary middle-input">mysql按类型查询</button>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-pane fade" id="combine">
-                <h1>混合</h1>
-                <div class="row">
-                    <div class="col">
-                        <h5 class="float-left">年</h5>
-                        <input data-tag="year" class="float-left form-control w-75" type="number" min="1900" max="2017"/>
-                    </div>
-                    <div class="col">
-                        <h5 class="float-left">月</h5>
-                        <select data-tag="month" class="float-left form-control w-75">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                            <option value="11">11</option>
-                            <option value="12">12</option>
-                        </select>
-                        <button class="btn choose">选</button>
-                    </div>
-                    <div class="col">
-                        <h5 class="float-left">季度</h5>
-                        <select data-tag="season" class="float-left form-control w-75" disabled="disabled">
-                            <option value="春">春</option>
-                            <option value="夏">夏</option>
-                            <option value="秋">秋</option>
-                            <option value="冬">冬</option>
-                        </select>
-                        <button class="btn choose">选</button>
-                    </div>
-                </div>
-                <div class="row interval-horizon">
-                    <div class="col">
-                        <h5 class="float-left">导演名字</h5>
-                        <input data-tag="director" class="float-left form-control w-75"/>
-                    </div>
-                    <div class="col">
-                        <h5 class="float-left">演员名字</h5>
-                        <input data-tag="actor" class="float-left form-control w-75"/>
-                    </div>
-                    <div class="col">
-                        <h5 class="float-left">电影类型</h5>
-                        <select data-tag="type" class="float-left form-control w-75">
-                            <option value=""></option>
-                            <option value="action">action</option>
-                            <option value="children">children</option>
-                            <option value="anime">anime</option>
-                            <option value="family">family</option>
-                            <option value="horror">horror</option>
-                            <option value="romance">romance</option>
-                            <option value="exercise">exercise</option>
-                            <option value="west">west</option>
-                            <option value="drama">drama</option>
-                            <option value="dance">dance</option>
-                            <option value="nature">nature</option>
-                            <option value="documentary">documentary</option>
-                            <option value="science">science</option>
-                            <option value="other">other</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-1">
-                        <p class="float-right">电影数</p>
-                    </div>
-                    <div class="col">
-                        <input data-tag="number" class="form-control middle-input float-left" disabled="disabled"/>
-                    </div>
-                    <div class="col">
-                        <button class="btn btn-primary middle-input">hive混合查询</button>
-                    </div>
-                    <div class="col">
-                        <button class="btn btn-primary middle-input">mysql混合查询</button>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-pane fade" id="list">
-                <h1>列表</h1>
-                <div class="row">
-                    <div class="col">
-                        <h5 class="float-left">年</h5>
-                        <input data-tag="year" class="float-left form-control w-75" type="number" min="1900" max="2017"/>
-                    </div>
-                    <div class="col">
-                        <h5 class="float-left">月</h5>
-                        <select data-tag="month" class="float-left form-control w-75">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                            <option value="11">11</option>
-                            <option value="12">12</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row interval-horizon">
-                    <div class="col">
-                        <h5 class="float-left">导演名字</h5>
-                        <input data-tag="director" class="float-left form-control w-75"/>
-                    </div>
-                    <div class="col">
-                        <h5 class="float-left">演员名字</h5>
-                        <input data-tag="actor" class="float-left form-control w-75"/>
-                    </div>
-                    <div class="col">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <button class="btn btn-primary middle-input">hive列表查询</button>
-                    </div>
-                    <div class="col">
-                        <button class="btn btn-primary middle-input">mysql列表查询</button>
-                    </div>
-                </div>
-                <div id="table-row" class="row">
-                    <table class="table table-hover table-bordered" id="listtable">
-                        <thead>
-                        <tr>
-                            <th>电影名</th>
-                            <th>时间</th>
-                            <th>类型</th>
-                            <th>导演</th>
-                            <th>演员</th>
-                            <th>评价</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td data-tag="name"></td>
-                            <td data-tag="time"></td>
-                            <td data-tag="type"></td>
-                            <td data-tag="director"></td>
-                            <td data-tag="actor"></td>
-                            <td data-tag="comment"></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="tab-pane fade" id="hot">
-                <h1>热度</h1>
-                <div class="row">
-                    <div class="col">
-                        <h5 class="float-left">电影名字</h5>
-                        <input class="float-left form-control w-75" data-tag="name"/>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-1">
-                        <p class="float-right">评论数</p>
-                    </div>
-                    <div class="col">
-                        <input class="form-control middle-input float-left" disabled="disabled"/>
-                    </div>
-                    <div class="col">
-                        <button class="btn btn-primary middle-input">hive热度查询</button>
-                    </div>
-                    <div class="col">
-                        <button class="btn btn-primary middle-input">mysql热度查询</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <p id="runtime" class="offset-1">运行时间:</p>
-        <div id="loading"></div>
-    </div>
-    <!-- /#page-content-wrapper -->
-
+    </nav>
 </div>
+<!-- END NAVBAR -->
+
+<!--Start 查询订单-->
+<div class="search bar6" id="search-order" style="display: none">
+    <div class="container">
+        <div class="inquirebox" style="height:670px;">
+            <label class="title">查询订单</label>
+            <form class="search-form" style="top:15px;width: 800px">
+                <input id="o-search-id" type="text" placeholder="请输入订单号" class="input-button"/>
+                <label>请选择订单时间</label>
+                <div class="year">年份</div><select class="select" id="myYear"></select>
+                <div class="form-item">
+                    <div class="dream-controls">
+                        <div class="ui-radio">
+                            <div class="year" style="margin-top: 10px;margin-bottom: 10px;">月份</div>
+                            <div class="dream-controls" id="month">
+                                <label class="ui-checkbox" onclick="Time()"><input type="checkbox" value="1" name="month"/><span> 1</span></label>
+                                <label class="ui-checkbox" onclick="Time()"><input type="checkbox" value="2" name="month"/><span> 2</span></label>
+                                <label class="ui-checkbox" onclick="Time()"><input type="checkbox" value="3" name="month"/><span> 3</span></label>
+                                <label class="ui-checkbox" onclick="Time()"><input type="checkbox" value="4" name="month"/><span> 4</span></label>
+                                <label class="ui-checkbox" onclick="Time()"><input type="checkbox" value="5" name="month"/><span> 5</span></label>
+                                <label class="ui-checkbox" onclick="Time()"><input type="checkbox" value="6" name="month"/><span> 6</span></label>
+                                <label class="ui-checkbox" onclick="Time()"><input type="checkbox" value="7" name="month"/><span> 7</span></label>
+                                <label class="ui-checkbox" onclick="Time()"><input type="checkbox" value="8" name="month"/><span> 8</span></label>
+                                <label class="ui-checkbox" onclick="Time()"><input type="checkbox" value="9" name="month"/><span> 9</span></label>
+                                <label class="ui-checkbox" onclick="Time()"><input type="checkbox" value="10" name="month"/><span> 10</span></label>
+                                <label class="ui-checkbox" onclick="Time()"><input type="checkbox" value="11" name="month"/><span> 11</span></label>
+                                <label class="ui-checkbox" onclick="Time()"><input type="checkbox" value="12" name="month"/><span> 12</span></label>
+                            </div>
+                            <div class="year" style="margin-top: 10px;margin-bottom: 10px;">具体日期</div>
+                            <div class="dream-controls">
+                                <input placeholder="点击输入具体日期" id="myID"/>
+                                <button type="reset" style="height: 35px;top: 410px;left: 170px;border-radius: 0;">重置</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" onclick="Table('order')" style="border-radius: 0;left:0;top:530px;">搜索</button>
+            </form>
+        </div>
+    </div>
+    <div class="container">
+        <div id="orderTable" class="table-display">
+            <div style="margin-left: 20px;padding-top: 20px;">
+                <label class="title">查询结果</label>
+            </div>
+            <div id="container" class="result-container"></div>
+            <table id="time" class="display" style="text-align: center;" width="100%" data-page-length="25" data-order="[[ 1, &quot;asc&quot; ]]">
+                <thead>
+                <tr>
+                    <th>产品ID</th>
+                    <th>电影名</th>
+                    <th>发行时间</th>
+                    <th>片长</th>
+                    <th>音频类型</th>
+                    <th>发行商</th>
+                </tr>
+                </thead>
+                <tfoot>
+                <tr>
+                    <th>产品ID</th>
+                    <th>电影名</th>
+                    <th>发行时间</th>
+                    <th>片长</th>
+                    <th>音频类型</th>
+                    <th>发行商</th>
+                </tr>
+                </tfoot>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!--End 查询订单-->
+
+<!--Start 查询商店-->
+<div  class="search bar6" id="search-shop" style="display: none">
+    <div class="container">
+        <div class="inquirebox">
+            <label class="title">查询商店</label>
+            <form class="search-form">
+                <input id="s-search-name" type="text" placeholder="请输入商店名称" class="input-button"/>
+                <input id="s-search-address" type="text" placeholder="请输入商店地址" class="input-button"/>
+                <button type="button" onclick="Table('shop')">搜索</button>
+            </form>
+        </div>
+    </div>
+    <div class="container">
+        <div id="shopTable" class="table-display">
+            <div style="margin-left: 20px;padding-top: 20px;">
+                <label class="title">查询结果</label>
+            </div>
+            <table id="shop" class="display" style="text-align: center;" width="100%" data-page-length="25" data-order="[[ 1, &quot;asc&quot; ]]">
+                <thead>
+                <tr>
+                    <th>产品ID</th>
+                    <th>电影名</th>
+                    <th>发行时间</th>
+                    <th>片长</th>
+                    <th>音频类型</th>
+                    <th>发行商</th>
+                </tr>
+                </thead>
+                <tfoot>
+                <tr>
+                    <th>产品ID</th>
+                    <th>电影名</th>
+                    <th>发行时间</th>
+                    <th>片长</th>
+                    <th>音频类型</th>
+                    <th>发行商</th>
+                </tr>
+                </tfoot>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!--End 查询商店-->
+
+<!--Start 查询商品-->
+<div  class="search bar6" id="search-product" style="display: none">
+    <div class="container">
+        <div class="inquirebox">
+            <label class="title">查询商店</label>
+            <form class="search-form">
+                <input id="p-search-name" type="text" placeholder="请输入商品名称" class="input-button"/>
+                <input id="p-search-type" type="text" placeholder="请输入商品类型" class="input-button"/>
+                <button type="button" onclick="Table('product')">搜索</button>
+            </form>
+        </div>
+    </div>
+    <div class="container">
+        <div id="productTable" class="table-display">
+            <div style="margin-left: 20px;padding-top: 20px;">
+                <label class="title">查询结果</label>
+            </div>
+            <table id="product" class="display" style="text-align: center;" width="100%" data-page-length="25" data-order="[[ 1, &quot;asc&quot; ]]">
+                <thead>
+                <tr>
+                    <th>产品ID</th>
+                    <th>电影名</th>
+                    <th>发行时间</th>
+                    <th>片长</th>
+                    <th>音频类型</th>
+                    <th>发行商</th>
+                </tr>
+                </thead>
+                <tfoot>
+                <tr>
+                    <th>产品ID</th>
+                    <th>电影名</th>
+                    <th>发行时间</th>
+                    <th>片长</th>
+                    <th>音频类型</th>
+                    <th>发行商</th>
+                </tr>
+                </tfoot>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!--End 查询商品-->
+
+
+<!--Start 数据分析-->
+<div  class="search bar6" id="data-analysis" style="display: none">
+    <div class="container">
+        <div class="inquirebox">
+            <label class="title">数据分析</label>
+            <form class="search-form">
+            </form>
+        </div>
+    </div>
+</div>
+<!--End 数据分析-->
+
+<script type="text/javascript">
+    document.getElementById("myID").flatpickr();
+</script>
+
 </body>
 </html>
