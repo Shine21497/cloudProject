@@ -121,3 +121,7 @@
 .form-item,
 .dream-label { margin-bottom: 10px;}
 .dream-controls{margin-top:10px;}
+
+.ppss{width:100%;height:520px;}
+
+.top1,.top2,.top3,.top4{width:50%;height:250px;float:left;color: #000000;}

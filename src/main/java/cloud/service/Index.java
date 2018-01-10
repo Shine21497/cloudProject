@@ -19,10 +19,11 @@ public class Index {
         {
             Vector line=(Vector) allorders.get(i);
             Timestamp timestamp=(Timestamp)line.get(4);
+            if (timestamp==null)continue;
             DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            if(!day.isEmpty())
+            if(day!=null&&!day.isEmpty()&&timestamp!=null&&day.equals(sdf.format(timestamp)))
             {
-                day.equals(sdf.format(timestamp));
+
                 HashMap<String,String> hashMap=new HashMap<>();
                 int o_id=(int)line.get(0);
                 int c_id=(int)line.get(1);
@@ -102,22 +103,23 @@ public class Index {
             Vector line=(Vector)allproducts.get(i);
             int p_id=(int)line.get(0);
             String productname=(String)line.get(1);
-            String price=(String)line.get(2);
+            int price=(int)line.get(2);
             int type_id=(int)line.get(3);
-            if(name.equals(productname))
+            if(name!=null&&name.equals(productname))
             {
                 String typename=Dao.getInstance().getTypeById(type_id);
-                if(typename.equals(type)) {
+                if(typename.equals(type.isEmpty()?typename:type)) {
                     HashMap<String, String> hashMap = new HashMap<>();
                     hashMap.put("p_id", String.valueOf(p_id));
                     hashMap.put("productname", productname);
-                    hashMap.put("price", price);
+                    hashMap.put("price", String.valueOf(price));
                     hashMap.put("type", typename);
                     list.add(hashMap);
                 }
 
             }
         }
+        System.out.println(list.size());
         return  list;
 
     }
