@@ -53,97 +53,14 @@ public class IndexRest {
             return hashMap;
         }
         else if (((String)map.get("action")).equals("rich-shop")){
-            String actor = (String)map.get("actor");
-            Long main = indexService.actorMain(actor);
-            Long participate = indexService.actorParticipate(actor);
-            hashMap.put("main",main);
-            hashMap.put("participate",participate);
+            hashMap.put("list",indexService.getMostRichShop());
+            return hashMap;
         }
-        else if (((String)map.get("action")).equals("type")){
-            String type = (String)map.get("type");
-            number = indexService.type(type);
-        }
-        else if (((String)map.get("action")).equals("combine-season")){
-            int year = Integer.parseInt((String)map.get("year"));
-            String season = (String)map.get("season");
-            String director =  (String)map.get("director");
-            String actor = (String)map.get("actor");
-            String type = (String)map.get("type");
-            number = indexService.combineSeason(year,season,director,actor,type);
-        }
-        else if (((String)map.get("action")).equals("combine-month")){
-            int year = Integer.parseInt((String)map.get("year"));
-            int month = Integer.parseInt((String)map.get("month"));
-            String director =  (String)map.get("director");
-            String actor = (String)map.get("actor");
-            String type = (String)map.get("type");
-            number = indexService.combineMonth(year,month,director,actor,type);
-        }
-        else if (((String)map.get("action")).equals("list")){
-            int year = Integer.parseInt((String)map.get("year"));
-            int month = Integer.parseInt((String)map.get("month"));
-            String director =  (String)map.get("director");
-            String actor = (String)map.get("actor");
-            List list = indexService.list(year,month,director,actor);
-            hashMap.put("list",list);
-        }
-        else if (((String)map.get("action")).equals("hot")){
-            String name = (String)map.get("name");
-            number = indexService.hot(name);
-        }
-        else if (((String)map.get("action")).equals("mysql-time-month")){
-            int year = Integer.parseInt((String)map.get("year"));
-            int month = Integer.parseInt((String)map.get("month"));
-        }
-        else if (((String)map.get("action")).equals("mysql-time-season")){
-            int year = Integer.parseInt((String)map.get("year"));
-            String season = (String)map.get("season");
-        }
-        else if (((String)map.get("action")).equals("mysql-time-week")){
-            int year = Integer.parseInt((String)map.get("week"));
-        }
-        else if (((String)map.get("action")).equals("mysql-name")){
-            String name = (String)map.get("name");
-
-        }
-        else if (((String)map.get("action")).equals("mysql-director")){
-            String director =  (String)map.get("director");
-        }
-        else if (((String)map.get("action")).equals("mysql-actor")){
-            String actor = (String)map.get("actor");
-
-        }
-        else if (((String)map.get("action")).equals("mysql-type")){
-            String type = (String)map.get("type");
-        }
-        else if (((String)map.get("action")).equals("mysql-combine-season")){
-            int year = Integer.parseInt((String)map.get("year"));
-            String season = (String)map.get("season");
-            String director =  (String)map.get("director");
-            String actor = (String)map.get("actor");
-            String type = (String)map.get("type");
-        }
-        else if (((String)map.get("action")).equals("mysql-combine-month")){
-            int year = Integer.parseInt((String)map.get("year"));
-            int month = Integer.parseInt((String)map.get("month"));
-            String director =  (String)map.get("director");
-            String actor = (String)map.get("actor");
-            String type = (String)map.get("type");
-        }
-        else if (((String)map.get("action")).equals("mysql-list")){
-            int year = Integer.parseInt((String)map.get("year"));
-            int month = Integer.parseInt((String)map.get("month"));
-            String director =  (String)map.get("director");
-            String actor = (String)map.get("actor");
-        }
-        else if (((String)map.get("action")).equals("mysql-hot")){
-            String name = (String)map.get("name");
+        else if (((String)map.get("action")).equals("rich-customer")){
+            hashMap.put("list",indexService.getMostRichCustomer());
+            return hashMap;
         }
 
-        long time = System.currentTimeMillis() - start;
-
-        hashMap.put("number",number);
-        hashMap.put("runtime",time);
         return hashMap;
     }
 
