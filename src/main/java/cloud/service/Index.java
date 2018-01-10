@@ -211,21 +211,25 @@ public class Index {
         for(int i=0;i<allshops.size();i++)
         {
             Vector line=(Vector)allshops.get(i);
-            int s_id=(int)line.get(0);
+            Integer s_id=(Integer)line.get(0);
             String shopname=(String)line.get(1);
             String shopaddr=(String)line.get(2);
             String phonenum=(String)line.get(3);
-            if(shopname.equals(name.isEmpty()?shopname:name)&&shopaddr.equals(address.isEmpty()?shopaddr:address))
+
+            if(shopname!=null&&shopaddr!=null&&shopname.equals(name.isEmpty()?shopname:name)&&shopaddr.equals(address.isEmpty()?shopaddr:address))
             {
+                System.out.println(shopname);
+                System.out.println(name);
                 HashMap<String,String> hashMap=new HashMap<>();
                 hashMap.put("s_id",String.valueOf(s_id));
                 hashMap.put("shopname",shopname);
-                hashMap.put("shopaddress",address);
+                hashMap.put("shopaddress",shopaddr);
                 hashMap.put("phonenumber",phonenum);
                 list.add(hashMap);
 
             }
         }
+        System.out.println(list.size());
         return  list;
 
     }

@@ -36,6 +36,7 @@ public class IndexRest {
             String name = (String)map.get("name");
             String address = (String)map.get("address");
              hashMap.put("list",indexService.getShopByNameAddress(name,address));
+            System.out.println("here");
              return hashMap;
         }
         else if (((String)map.get("action")).equals("product")){
