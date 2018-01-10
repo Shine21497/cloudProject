@@ -1525,7 +1525,7 @@ button {
 }
 .bar6 button {
     background:#1B9AF7;
-    border-radius:0 5px 5px 0;
+    border-radius:5px 5px 5px 5px;
     width:60px;
     top:0;
     right:0;
