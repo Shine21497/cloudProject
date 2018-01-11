@@ -120,7 +120,6 @@ function Table(id,type) {
         var year = $('#o-search-year');
         var month = $('#month')
         var date = $('#date');
-        alert(date.val() + month.val() + year.val())
 
         var post = {
             action: "order",

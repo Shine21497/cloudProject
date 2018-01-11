@@ -127,7 +127,7 @@ public class Index {
             String productname=(String)line.get(1);
             int price=(int)line.get(2);
             int type_id=(int)line.get(3);
-            if(name!=null&&name.equals(productname))
+            if(productname!=null&&productname.equals(name.isEmpty()?productname:name))
             {
                 String typename=Dao.getInstance().getTypeById(type_id);
                 if(typename.equals(type.isEmpty()?typename:type)) {
