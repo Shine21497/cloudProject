@@ -1,5 +1,6 @@
 package cloud.dao;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.*;
@@ -100,29 +101,125 @@ public class Dao extends BaseDao{
     }
     public Vector getProductById(int id)
     {
-        String sql="select name from product where p_id="+id;
-        return super.selectSomeValue(sql);
+        String sql="select * from product where p_id="+id;
+        return super.selectOnlyNote(sql);
     }
     public Vector getOrderGroupByShop()
     {
-        String sql="select s_id,count(o_id) from purchaseorder group by s_id";
-        return super.selectSomeNote(sql);
+        String sql="select s_id,o_id from purchaseorder";
+        Vector vector=super.selectSomeNote(sql);
+        HashMap<Integer,Integer> hashMap=new HashMap<>();
+        for(int i=0;i<vector.size();i++)
+        {
+            Vector line=(Vector) vector.get(i);
+            int s_id=(int)line.get(0);
+            int o_id=(int)line.get(1);
+            if (hashMap.containsKey(s_id))
+            {
+                int tmep=hashMap.get(s_id);
+                hashMap.put(s_id,tmep+1);
+            }
+            else
+            {
+                hashMap.put(s_id,1);
+            }
+        }
+        Vector all=new Vector();
+        for (Map.Entry<Integer,Integer> item : hashMap.entrySet()) {
+            Vector row=new Vector();
+            row.add(item.getKey());
+            row.add(item.getValue());
+            all.add(row);
+        }
+        return all;
     }
     public Vector getIncludeGroupByProduct()
     {
-        String sql="select p_id,sum(number) from purchaseorder group by p_id";
-        return super.selectSomeNote(sql);
+        String sql="select p_id,number from include";
+        Vector vector=super.selectSomeNote(sql);
+        HashMap<Integer,Integer> hashMap=new HashMap<>();
+        for(int i=0;i<vector.size();i++)
+        {
+            Vector line=(Vector) vector.get(i);
+            int p_id=(int)line.get(0);
+            int number=(int)line.get(1);
+            if (hashMap.containsKey(p_id))
+            {
+                int tmep=hashMap.get(p_id);
+                hashMap.put(p_id,tmep+number);
+            }
+            else
+            {
+                hashMap.put(p_id,number);
+            }
+        }
+        Vector all=new Vector();
+        for (Map.Entry<Integer,Integer> item : hashMap.entrySet()) {
+            Vector row=new Vector();
+            row.add(item.getKey());
+            row.add(item.getValue());
+            all.add(row);
+        }
+        return all;
     }
 
     public Vector getSellGroupByShop()
     {
-        String sql = "select s_id,sum(sales) from sell group by s_id";
-        return super.selectSomeNote(sql);
+        String sql = "select s_id,sales from sell";
+        Vector vector=super.selectSomeNote(sql);
+        HashMap<Integer,Integer> hashMap=new HashMap<>();
+        for(int i=0;i<vector.size();i++)
+        {
+            Vector line=(Vector) vector.get(i);
+            int s_id=(int)line.get(0);
+            int sales=(int)line.get(1);
+            if (hashMap.containsKey(s_id))
+            {
+                int tmep=hashMap.get(s_id);
+                hashMap.put(s_id,tmep+sales);
+            }
+            else
+            {
+                hashMap.put(s_id,sales);
+            }
+        }
+        Vector all=new Vector();
+        for (Map.Entry<Integer,Integer> item : hashMap.entrySet()) {
+            Vector row=new Vector();
+            row.add(item.getKey());
+            row.add(item.getValue());
+            all.add(row);
+        }
+        return all;
     }
     public Vector getOrderGroupByCustomer()
     {
-        String sql = "select c_id,sum(total_price) from purchaseorder group by c_id";
-        return super.selectSomeNote(sql);
+        String sql = "select c_id,total_price from purchaseorder";
+        Vector vector=super.selectSomeNote(sql);
+        HashMap<Integer,Integer> hashMap=new HashMap<>();
+        for(int i=0;i<vector.size();i++)
+        {
+            Vector line=(Vector) vector.get(i);
+            int c_id=(int)line.get(0);
+            int total_price=(int)line.get(1);
+            if (hashMap.containsKey(c_id))
+            {
+                int tmep=hashMap.get(c_id);
+                hashMap.put(c_id,tmep+total_price);
+            }
+            else
+            {
+                hashMap.put(c_id,total_price);
+            }
+        }
+        Vector all=new Vector();
+        for (Map.Entry<Integer,Integer> item : hashMap.entrySet()) {
+            Vector row=new Vector();
+            row.add(item.getKey());
+            row.add(item.getValue());
+            all.add(row);
+        }
+        return all;
     }
 
 

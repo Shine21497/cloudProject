@@ -189,15 +189,77 @@
             <div class="ppss">
                 <div class="top1">
                     <div class="title">最火爆的商店TOP5</div>
+                    <button type="button" class="btn btn-default btn-lg" onclick="Table('hotshop')" style="top: 200px;right: 800px;" >搜索</button>
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="hottable" hidden="hidden">
+                            <thead>
+                            <tr>
+                                <th>商店ID</th>
+                                <th>商店名字</th>
+                                <th>地址</th>
+                                <th>订单数</th>
+                            </tr>
+                            </thead>
+                            <tbody id="htbody">
+
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <div class="top2">
                     <div class="title">最盈利的商店TOP5</div>
+                    <button type="button" class="btn btn-default btn-lg" onclick="Table('richshop')" style="top: 200px;right: 400px;" >搜索</button>
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="richtable" hidden="hidden">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>商店名</th>
+                                <th>销售额</th>
+                            </tr>
+                            </thead>
+                            <tbody id="rtbody">
+
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <div class="top3">
                     <div class="title">最火爆的商品TOP5</div>
+                    <button type="button" class="btn btn-default btn-lg" onclick="Table('hotproduct')" style="top: 400px;right: 800px;" >搜索</button>
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="hotproduct" hidden="hidden">
+                            <thead>
+                            <tr>
+                                <th>商品ID</th>
+                                <th>商品名</th>
+                                <th>价格</th>
+                                <th>销售数量</th>
+                            </tr>
+                            </thead>
+                            <tbody id="mytbody">
+
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <div class="top4">
                     <div class="title">最大款的客户TOP5</div>
+                    <button type="button" class="btn btn-default btn-lg" onclick="Table('richcustomer')" style="top: 400px;right: 400px;" >搜索</button>
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="richcustomer" hidden="hidden">
+                            <thead>
+                            <tr>
+                                <th>消费者ID</th>
+                                <th>姓名</th>
+                                <th>消费额度</th>
+                            </tr>
+                            </thead>
+                            <tbody id="rcbody">
+
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -206,7 +268,7 @@
 <!--End 数据分析-->
 
 <script type="text/javascript">
-    document.getElementById("myID").flatpickr();
+    document.getElementById("date").flatpickr();
 </script>
 
 </body>

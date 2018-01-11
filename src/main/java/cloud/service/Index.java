@@ -12,20 +12,40 @@ import java.util.*;
 @Service
 public class Index {
 
-    public List<HashMap<String,String>> getOrdersByDate(String year,String month,String day) {
+    public List<HashMap<String,String>> getOrdersByDate(String oid,String year,String month,String day) {
         List<HashMap<String,String>> list = new ArrayList<>();
         Vector allorders=Dao.getInstance().getAllOrder();
         for(int i=0;i<allorders.size();i++)
         {
             Vector line=(Vector) allorders.get(i);
+            int o_id=(int)line.get(0);
             Timestamp timestamp=(Timestamp)line.get(4);
-            if (timestamp==null)continue;
             DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            if(!oid.isEmpty()&&Integer.parseInt(oid)==o_id)
+            {
+                HashMap<String,String> hashMap=new HashMap<>();
+                int c_id=(int)line.get(1);
+                Vector customer=Dao.getInstance().getCustomerById(c_id);
+                int s_id=(int)line.get(2);
+                Vector shop=Dao.getInstance().getShopById(s_id);
+                int totalprice=(int)line.get(3);
+                //String date=sdf.format(timestamp);
+                String status=(String)line.get(5);
+                hashMap.put("o_id",String.valueOf(o_id));
+                hashMap.put("customer",(String)customer.get(1));
+                hashMap.put("shop",(String)shop.get(1));
+                hashMap.put("totalprice",String.valueOf(totalprice));
+                hashMap.put("date","");
+                hashMap.put("status",status);
+                list.add(hashMap);
+                continue;
+            }
+            if (timestamp==null)continue;
+            System.out.println(sdf.format(timestamp));
             if(day!=null&&!day.isEmpty()&&timestamp!=null&&day.equals(sdf.format(timestamp)))
             {
 
                 HashMap<String,String> hashMap=new HashMap<>();
-                int o_id=(int)line.get(0);
                 int c_id=(int)line.get(1);
                 Vector customer=Dao.getInstance().getCustomerById(c_id);
                 int s_id=(int)line.get(2);
@@ -46,7 +66,6 @@ public class Index {
             if(ymd[0].equals(year.isEmpty()?ymd[0]:year)&&ymd[1].equals(month.isEmpty()?ymd[1]:month))
             {
                 HashMap<String,String> hashMap=new HashMap<>();
-                int o_id=(int)line.get(0);
                 int c_id=(int)line.get(1);
                 Vector customer=Dao.getInstance().getCustomerById(c_id);
                 int s_id=(int)line.get(2);
@@ -133,7 +152,7 @@ public class Index {
                 Vector vector2=(Vector)o2;
                 if((int)vector1.get(1)<(int)vector2.get(1))
                 {
-                    return -1;
+                    return 1;
                 }
                 else if((int)vector1.get(1)==(int)vector2.get(1))
                 {
@@ -141,7 +160,7 @@ public class Index {
                 }
                 else
                 {
-                    return 1;
+                    return -1;
                 }
             }
         });
@@ -172,7 +191,7 @@ public class Index {
                 Vector vector2=(Vector)o2;
                 if((int)vector1.get(1)<(int)vector2.get(1))
                 {
-                    return -1;
+                    return 1;
                 }
                 else if((int)vector1.get(1)==(int)vector2.get(1))
                 {
@@ -180,7 +199,7 @@ public class Index {
                 }
                 else
                 {
-                    return 1;
+                    return -1;
                 }
             }
         });
@@ -188,7 +207,7 @@ public class Index {
         {
             Vector productline=(Vector) vector.get(i);
             int id=(int)productline.get(0);
-            int sellnum=(int)productline.get(1);
+            int sellnum=(int)(productline.get(1));
             Vector product=Dao.getInstance().getProductById(id);
             String  name=(String)product.get(1);
             int price=(int)product.get(2);
@@ -214,7 +233,7 @@ public class Index {
                 Vector vector2=(Vector)o2;
                 if((int)vector1.get(1)<(int)vector2.get(1))
                 {
-                    return -1;
+                    return 1;
                 }
                 else if((int)vector1.get(1)==(int)vector2.get(1))
                 {
@@ -222,7 +241,7 @@ public class Index {
                 }
                 else
                 {
-                    return 1;
+                    return -1;
                 }
             }
         });
@@ -252,7 +271,7 @@ public class Index {
                 Vector vector2=(Vector)o2;
                 if((int)vector1.get(1)<(int)vector2.get(1))
                 {
-                    return -1;
+                    return 1;
                 }
                 else if((int)vector1.get(1)==(int)vector2.get(1))
                 {
@@ -260,7 +279,7 @@ public class Index {
                 }
                 else
                 {
-                    return 1;
+                    return -1;
                 }
             }
         });

@@ -106,8 +106,47 @@ function Table(id,type) {
 
     }
     if (id === 'order') {
-        var first=true;
+        var first = true;
         $("#order tr").each(function () {
+            if (!first) {
+                $(this).remove();
+
+            }
+            else {
+                first = false;
+            }
+        })
+        var oid = $('#o-search-id')
+        var year = $('#o-search-year');
+        var month = $('#month')
+        var date = $('#date');
+        alert(date.val() + month.val() + year.val())
+
+        var post = {
+            action: "order",
+            year: year.val(),
+            date: date.val(),
+            month: month.val(),
+            oid: oid.val()
+        };
+        ajaxPost("/", post, function (data) {
+            order.style.display = 'block';
+            if (data.list) {
+                data.list.forEach(function (value) {
+                    addTableRow("order", "<tr>" + "<td>" + value.o_id + "</td>" + "<td>" + value.customer + "</td>" + "<td>" + value.shop + "</td>" + "<td>" + value.totalprice + "</td>" + "<td>" + value.date + "</td>" + "<td>" + value.status + "</td>" + "</tr>", -1)
+                });
+
+            }
+            else {
+                alert("list null")
+
+            }
+
+        });
+    }
+    if (id === 'hotshop') {
+        var first=true;
+        $("#hottable tr").each(function () {
             if(!first)
             {
                 $(this).remove();
@@ -118,21 +157,113 @@ function Table(id,type) {
                 first=false;
             }
         })
-        var year=$('#o-search-year');
-        var date=$('#date');
-        alert(date.val())
-
         var post = {
-            action : "order",
-            year : year.val(),
-            date : date.val(),
-            month:""
+            action : "hot-shop"
         };
         ajaxPost("/",post,function (data) {
-            order.style.display = 'block';
+            $('#hottable').show();
             if(data.list){
                 data.list.forEach(function (value) {
-                    addTableRow("order","<tr>"+"<td>"+value.o_id+"</td>"+"<td>"+value.customer+"</td>"+"<td>"+value.shop+"</td>"+"<td>"+value.totalprice+"</td>"+"<td>"+value.date+"</td>"+"<td>"+value.status+"</td>"+"</tr>",-1)
+                    addTableRow("hottable","<tr>"+"<td>"+value.id+"</td>"+"<td>"+value.name+"</td>"+"<td>"+value.address+"</td>"+"<td>"+value.ordernum+"</td>"+"</tr>",-1)
+                });
+
+            }
+            else{
+                alert("list null")
+
+            }
+
+        });
+
+
+    }
+    if (id === 'richshop') {
+        var first=true;
+        $("#richtable tr").each(function () {
+            if(!first)
+            {
+                $(this).remove();
+
+            }
+            else
+            {
+                first=false;
+            }
+        })
+        var post = {
+            action : "rich-shop"
+        };
+        ajaxPost("/",post,function (data) {
+            $('#richtable').show();
+            if(data.list){
+                data.list.forEach(function (value) {
+                    addTableRow("richtable","<tr>"+"<td>"+value.id+"</td>"+"<td>"+value.name+"</td>"+"<td>"+value.sales+"</td>"+"</tr>",-1)
+                });
+
+            }
+            else{
+                alert("list null")
+
+            }
+
+        });
+
+
+    }
+    if (id === 'hotproduct') {
+        var first=true;
+        $("#hotproduct tr").each(function () {
+            if(!first)
+            {
+                $(this).remove();
+
+            }
+            else
+            {
+                first=false;
+            }
+        })
+        var post = {
+            action : "hot-product"
+        };
+        ajaxPost("/",post,function (data) {
+            $('#hotproduct').show();
+            if(data.list){
+                data.list.forEach(function (value) {
+                    addTableRow("hotproduct","<tr>"+"<td>"+value.id+"</td>"+"<td>"+value.name+"</td>"+"<td>"+value.price+"</td>"+"<td>"+value.sellnum+"</td>"+"</tr>",-1)
+                });
+
+            }
+            else{
+                alert("list null")
+
+            }
+
+        });
+
+
+    }
+    if (id === 'richcustomer') {
+        var first=true;
+        $("#richcustomer tr").each(function () {
+            if(!first)
+            {
+                $(this).remove();
+
+            }
+            else
+            {
+                first=false;
+            }
+        })
+        var post = {
+            action : "rich-customer"
+        };
+        ajaxPost("/",post,function (data) {
+            $('#richcustomer').show();
+            if(data.list){
+                data.list.forEach(function (value) {
+                    addTableRow("richcustomer","<tr>"+"<td>"+value.id+"</td>"+"<td>"+value.name+"</td>"+"<td>"+value.outcome+"</td>"+"</tr>",-1)
                 });
 
             }

@@ -29,7 +29,8 @@ public class IndexRest {
             String year = (String)map.get("year");
             String month = (String)map.get("month");
             String day = (String)map.get("date");
-            hashMap.put("list",indexService.getOrdersByDate(year,month,day));
+            String id=(String)map.get("oid");
+            hashMap.put("list",indexService.getOrdersByDate(id,year,month,day));
             return hashMap;
         }
         else if (((String)map.get("action")).equals("shop")){
