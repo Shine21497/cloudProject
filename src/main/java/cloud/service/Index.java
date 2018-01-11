@@ -40,11 +40,12 @@ public class Index {
                 list.add(hashMap);
                 continue;
             }
+
             if (timestamp==null)continue;
             System.out.println(sdf.format(timestamp));
             if(day!=null&&!day.isEmpty()&&timestamp!=null&&day.equals(sdf.format(timestamp)))
             {
-
+                if(!oid.isEmpty()) continue;
                 HashMap<String,String> hashMap=new HashMap<>();
                 int c_id=(int)line.get(1);
                 Vector customer=Dao.getInstance().getCustomerById(c_id);
@@ -63,8 +64,10 @@ public class Index {
                 continue;
             }
             String[] ymd=sdf.format(timestamp).split("-");
+            if(!oid.isEmpty()||!day.isEmpty())continue;
             if(ymd[0].equals(year.isEmpty()?ymd[0]:year)&&ymd[1].equals(month.isEmpty()?ymd[1]:month))
             {
+                System.out.println("here");
                 HashMap<String,String> hashMap=new HashMap<>();
                 int c_id=(int)line.get(1);
                 Vector customer=Dao.getInstance().getCustomerById(c_id);
